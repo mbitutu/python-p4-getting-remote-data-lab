@@ -12,8 +12,9 @@ class GetRequester:
 
     def load_json(self):
         response_body = self.get_response_body()
-        try:
-            return response_body.json()
-        except ValueError:
-
-            return None
+        if response_body:
+            try:
+                return json.loads(response_body)
+            except json.JSONDecodeError as e:
+                print(f"JSON decoding error: {e}")
+                return None
